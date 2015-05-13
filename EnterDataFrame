@@ -1,0 +1,134 @@
+package org.geotools;
+
+import java.awt.BorderLayout;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+/*
+ * Stellt ein Frame für eine Dateneingabe 
+ */
+public class EnterDataFrame {
+
+	private static JPanel contentPane;
+	private static JTextField latitudeText;
+	private static JTextField longitudeText;
+	private static JTextField nameText;
+	private static JTextField numberText;
+	static DataTransfer dataTransfer = new DataTransfer();
+	Double latDouble;
+	Double longDouble;
+	int numberInt;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		showEnterDataFrame();
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public static void showEnterDataFrame() {
+		final JFrame frame = new JFrame();
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 374, 280);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JLabel lblLatitude = new JLabel("Latitude");
+		lblLatitude.setBounds(10, 32, 71, 22);
+		contentPane.add(lblLatitude);
+
+		JLabel lblLongitude = new JLabel("Longitude");
+		lblLongitude.setBounds(10, 70, 71, 14);
+		contentPane.add(lblLongitude);
+
+		JLabel lblName = new JLabel("Name");
+		lblName.setBounds(10, 105, 46, 14);
+		contentPane.add(lblName);
+
+		JLabel lblNumber = new JLabel("Number");
+		lblNumber.setBounds(10, 136, 58, 14);
+		contentPane.add(lblNumber);
+
+		latitudeText = new JTextField();
+		latitudeText.setBounds(102, 33, 86, 20);
+		contentPane.add(latitudeText);
+		latitudeText.setColumns(10);
+
+		longitudeText = new JTextField();
+		longitudeText.setBounds(102, 67, 86, 20);
+		contentPane.add(longitudeText);
+		longitudeText.setColumns(10);
+
+		nameText = new JTextField();
+		nameText.setBounds(102, 102, 86, 20);
+		contentPane.add(nameText);
+		nameText.setColumns(10);
+
+		numberText = new JTextField();
+		numberText.setBounds(102, 133, 86, 20);
+		contentPane.add(numberText);
+		numberText.setColumns(10);
+
+		JButton okButton = new JButton("OK");
+		okButton.setBounds(128, 195, 89, 23);
+		contentPane.add(okButton);
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand() == "OK") {
+					try {
+						frame.setVisible(false);
+						dataTransfer.addFeature();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setBounds(250, 195, 89, 23);
+		contentPane.add(cancelButton);
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand() == "Cancel") {
+					frame.setVisible(false);
+					frame.dispose();
+				}
+			}
+		});
+	}
+
+	public double getLatitude() {
+		latDouble = Double.parseDouble(latitudeText.getText());
+		return latDouble;
+	}
+
+	public double getLongitude() {
+		longDouble = Double.parseDouble(longitudeText.getText());
+		return longDouble;
+	}
+
+	public String getName() {
+		return nameText.getText();
+	}
+
+	public int getNumber() {
+		numberInt = Integer.parseInt(numberText.getText());
+		return numberInt;
+	}
+}
